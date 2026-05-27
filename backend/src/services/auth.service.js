@@ -41,3 +41,48 @@ const updateProfile = async (userId, body) => {
   }
   return user;
 };
+
+const changePassword = async (userId, oldPassword, newPassword) => {
+  const user = await User.findById(userId).select('+password');
+  if (!user || !(await user.comparePassword(oldPassword))) {
+    const err = new Error('Current password is incorrect');
+    err.statusCode = 400;
+    throw err;
+  }
+  user.password = newPassword;
+  await user.save();
+  return { message: 'Password changed successfully' };
+};
+
+const forgotPassword = async (email) => {
+  const user = await User.findOne({ email });
+  if (!user) return null;
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  user.otp = otp;
+  user.otpExpiry = Date.now() + 15 * 60 * 1000;
+  await user.save({ validateBeforeSave: false });
+  return otp;
+};
+
+const resetPassword = async (email, otp, newPassword) => {
+  const user = await User.findOne({ email, otp, otpExpiry: { $gt: Date.now() } });
+  if (!user) return null;
+  user.password = newPassword;
+  user.otp = undefined;
+  user.otpExpiry = undefined;
+  user.isVerified = true;
+  await user.save();
+  return user;
+};
+
+const sendOTP = async (email) => {
+  const user = await User.findOne({ email });
+  if (!user) return null;
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  user.otp = otp;
+  user.otpExpiry = Date.now() + 15 * 60 * 1000;
+  await user.save({ validateBeforeSave: false });
+  return otp;
+};
+
+module.exports = { register, login, getProfile, updateProfile, changePassword, forgotPassword, resetPassword, sendOTP };
