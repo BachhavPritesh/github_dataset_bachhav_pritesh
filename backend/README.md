@@ -2,6 +2,8 @@
 
 A production-ready RESTful API for querying, analyzing, and managing a large-scale GitHub code dataset. Built with **Node.js**, **Express 4**, and **MongoDB** following a clean layered architecture with JWT-based authentication, role-based access control, rate limiting, and comprehensive analytics.
 
+> **Postman Documentation:** [https://documenter.getpostman.com/view/50839202/2sBXwmRDDH](https://documenter.getpostman.com/view/50839202/2sBXwmRDDH)
+
 ## Tech Stack
 
 | Layer | Technology |
