@@ -20,4 +20,12 @@ const datasetSchema = new mongoose.Schema({
   isDeleted: { type: Boolean, default: false },
 }, { timestamps: true });
 
+datasetSchema.index({ type: 1 });
+datasetSchema.index({ repo: 1 });
+datasetSchema.index({ source: 1 });
+datasetSchema.index({ language: 1 });
+datasetSchema.index({ framework: 1 });
+datasetSchema.index({ category: 1 });
+datasetSchema.index({ isDeleted: 1 });
+
 module.exports = mongoose.model('Dataset', datasetSchema);
