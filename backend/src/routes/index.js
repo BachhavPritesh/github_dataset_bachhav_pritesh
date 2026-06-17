@@ -1,3 +1,5 @@
+// main route registry — mounts all sub-routers under their respective path prefixes
+
 const express = require('express');
 const { generalLimiter } = require('../middlewares/rateLimiter.middleware');
 
@@ -13,7 +15,10 @@ const protectedRouter = require('./protected.routes');
 
 const router = express.Router();
 
+// apply general rate limiter to all routes
 router.use(generalLimiter);
+
+// mount sub-routers — note: /datasets/filter must come before /datasets to avoid route conflict
 router.use('/datasets/filter', filterRouter);
 router.use('/datasets', datasetRouter);
 router.use('/search', searchRouter);
