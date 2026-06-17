@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Multi-Language Support",
+    "description": "Browse code datasets in Python, JavaScript, TypeScript, Go, Rust, Java, and more. Filter by language to find exactly what you need.",
+    "icon": "code2"
+  },
+  {
+    "title": "Smart Search",
+    "description": "Full-text search across instructions, inputs, and outputs. Find relevant code snippets and documentation in seconds.",
+    "icon": "search"
+  },
+  {
+    "title": "Rich Analytics",
+    "description": "Visualize dataset composition by type, language, and framework. Understand trends across the repository ecosystem.",
+    "icon": "barChart3"
+  },
+  {
+    "title": "Trending Repos",
+    "description": "Discover the most active repositories. Stay up to date with the latest open-source intelligence.",
+    "icon": "trendingUp"
+  },
+  {
+    "title": "Interactive Filtering",
+    "description": "Filter datasets by type, framework, category, and more. Combine filters to drill down to the exact data you need.",
+    "icon": "slidersHorizontal"
+  },
+  {
+    "title": "Developer Friendly",
+    "description": "Access datasets programmatically via our REST API. Perfect for training, analysis, and research workflows.",
+    "icon": "terminal"
+  }
+]

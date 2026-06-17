@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Vikram Patel",
+    "role": "Founder & CEO",
+    "bio": "Building the future of code intelligence. Previously led engineering at multiple AI startups.",
+    "avatar": "VP"
+  },
+  {
+    "name": "Priya Sharma",
+    "role": "CTO",
+    "bio": "Architect of the RepoHub platform. 10+ years of experience in distributed systems and ML infrastructure.",
+    "avatar": "PS"
+  },
+  {
+    "name": "James Chen",
+    "role": "Lead Engineer",
+    "bio": "Full-stack engineer passionate about developer tools and beautiful interfaces.",
+    "avatar": "JC"
+  },
+  {
+    "name": "Aisha Mohammed",
+    "role": "Data Engineer",
+    "bio": "Owns the data pipeline and dataset quality. Ensures every entry meets our rigorous standards.",
+    "avatar": "AM"
+  }
+]
