@@ -1,3 +1,6 @@
+// dataset seeder — reads a JSON file of GitHub dataset entries, transforms them, and inserts into MongoDB
+// run with: node src/seeders/dataset.seeder.js or npm run seed
+
 const path = require('path');
 const fs = require('fs');
 const connectDB = require('../config/db');
@@ -6,6 +9,7 @@ const Dataset = require('../models/Dataset.model');
 const seed = async () => {
   await connectDB();
 
+  // try two possible locations for the source JSON file
   let filePath = path.join(__dirname, '..', '..', '..', 'GITHUB dataset.json');
   if (!fs.existsSync(filePath)) {
     filePath = path.join(__dirname, '..', '..', 'data', 'dataset.json');
@@ -15,8 +19,12 @@ const seed = async () => {
   const raw = fs.readFileSync(filePath, 'utf-8');
   const entries = JSON.parse(raw);
 
+  // ---------- Heuristic Detection Functions ----------
+
+  // detects programming language from file extension or repository name
   const detectLanguage = (filePath, repo) => {
     if (!filePath) return 'python';
+    // map file extensions to language names
     const extMap = {
       '.py': 'python', '.js': 'javascript', '.ts': 'typescript',
       '.java': 'java', '.go': 'go', '.rs': 'rust', '.cpp': 'cpp',
@@ -24,6 +32,7 @@ const seed = async () => {
     };
     const ext = Object.keys(extMap).find((e) => filePath.endsWith(e));
     if (ext) return extMap[ext];
+    // fallback: infer language from keywords in the repository name
     const repoName = (repo || '').toLowerCase();
     if (/\bpython|pytorch|django|yolov|transformers|spacy|numpy|pandas|scikit|tensorflow\b/.test(repoName)) return 'python';
     if (/\bjavascript|node|react|vue|angular\b/.test(repoName)) return 'javascript';
@@ -34,6 +43,7 @@ const seed = async () => {
     return 'python';
   };
 
+  // detects framework from keywords in the repository name
   const detectFramework = (repo, type) => {
     const repoName = (repo || '').toLowerCase();
     if (/\bpytorch|torch\b/.test(repoName)) return 'pytorch';
@@ -49,6 +59,7 @@ const seed = async () => {
     return null;
   };
 
+  // detects category from type field and repository name keywords
   const detectCategory = (type, repo) => {
     const typeStr = (type || '').toLowerCase();
     const repoName = (repo || '').toLowerCase();
@@ -59,6 +70,7 @@ const seed = async () => {
     return 'github';
   };
 
+  // transform raw JSON entries into the Dataset schema format
   const transformed = entries.map((entry) => {
     const repo = entry.metadata?.repo_name || 'unknown';
     const filePath = entry.metadata?.file_path || '';
@@ -70,20 +82,22 @@ const seed = async () => {
       docType: entry.metadata?.doc_type || null,
       codeElement: entry.metadata?.code_element || null,
       isReadme: entry.metadata?.is_readme || false,
-      language: detectLanguage(filePath, repo),
-      framework: detectFramework(repo, type),
-      category: detectCategory(type, repo),
+      language: detectLanguage(filePath, repo),      // heuristic: file extension → language
+      framework: detectFramework(repo, type),          // heuristic: repo keywords → framework
+      category: detectCategory(type, repo),            // heuristic: type/repo → category
       instruction: entry.instruction || '',
       input: entry.input || '',
       output: entry.output || '',
     };
   });
 
+  // clear existing data and insert the transformed entries
   await Dataset.deleteMany({});
   try {
     const inserted = await Dataset.insertMany(transformed, { ordered: false });
     console.log(`Seeded ${inserted.length} entries`);
   } catch (err) {
+    // ordered: false means some may have been inserted before the first duplicate error
     const count = err.result?.insertedCount || 0;
     console.log(`Seeded ${count} entries (${transformed.length - count} duplicates skipped)`);
   }
