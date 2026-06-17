@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "title": "Introducing RepoHub: Your Gateway to GitHub Intelligence",
+    "excerpt": "We're excited to launch RepoHub — a platform that makes it easy to explore, search, and analyze code datasets from thousands of GitHub repositories.",
+    "author": "Vikram Patel",
+    "date": "2026-01-15",
+    "tags": ["announcement", "platform"],
+    "image": null
+  },
+  {
+    "id": 2,
+    "title": "How We Built the Dataset Pipeline",
+    "excerpt": "A deep dive into our data processing architecture: how we extract, transform, and index code snippets from popular open-source repositories.",
+    "author": "Priya Sharma",
+    "date": "2026-02-01",
+    "tags": ["engineering", "data"],
+    "image": null
+  },
+  {
+    "id": 3,
+    "title": "Using RepoHub Datasets for ML Training",
+    "excerpt": "Learn how to leverage RepoHub's rich dataset collection to train and fine-tune machine learning models for code understanding.",
+    "author": "Aisha Mohammed",
+    "date": "2026-02-20",
+    "tags": ["tutorial", "ml"],
+    "image": null
+  },
+  {
+    "id": 4,
+    "title": "Top 10 Most Active Repositories This Month",
+    "excerpt": "Our monthly roundup of the most active open-source repositories, based on dataset contributions and community engagement.",
+    "author": "James Chen",
+    "date": "2026-03-01",
+    "tags": ["trending", "community"],
+    "image": null
+  }
+]

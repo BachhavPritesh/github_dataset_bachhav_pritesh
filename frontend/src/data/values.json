@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Open Source First",
+    "description": "We believe in the power of open source. Our platform is built to serve the open source community.",
+    "icon": "globe"
+  },
+  {
+    "title": "Data Quality",
+    "description": "Every dataset entry is carefully structured and validated. Quality over quantity, always.",
+    "icon": "shieldCheck"
+  },
+  {
+    "title": "Developer Experience",
+    "description": "Clean APIs, intuitive interfaces, and comprehensive documentation. We build tools we'd want to use.",
+    "icon": "zap"
+  },
+  {
+    "title": "Continuous Innovation",
+    "description": "The code landscape evolves fast. We evolve with it, constantly adding new repositories and features.",
+    "icon": "sparkles"
+  }
+]

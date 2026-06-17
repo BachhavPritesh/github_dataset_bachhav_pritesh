@@ -1,3 +1,5 @@
+// Express application setup — configures middleware, mounts routes, and registers error handling
+
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -7,10 +9,12 @@ const errorMiddleware = require('./src/middlewares/error.middleware');
 
 const app = express();
 
-app.use(cors());
-app.use(morgan('dev'));
-app.use(express.json());
+// ---------- Global Middleware ----------
+app.use(cors());                  // enable cross-origin requests
+app.use(morgan('dev'));           // HTTP request logging (dev format)
+app.use(express.json());          // parse JSON request bodies
 
+// ---------- Health Check ----------
 app.get('/api/v1/health', (req, res) => {
   res.status(200).json({
     success: true,
@@ -24,8 +28,10 @@ app.get('/api/v1/health', (req, res) => {
   });
 });
 
+// ---------- API Routes ----------
 app.use('/api/v1', routes);
 
+// ---------- Global Error Handler (must be last) ----------
 app.use(errorMiddleware);
 
 module.exports = app;

@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary: var(--color-indigo-600);
+  --color-primary-hover: var(--color-indigo-700);
+  --color-primary-soft: var(--color-indigo-50);
+  --color-primary-dark: var(--color-indigo-400);
+  --color-primary-hover-dark: var(--color-indigo-300);
+  --color-primary-soft-dark: var(--color-indigo-950);
+  --color-surface: #ffffff;
+  --color-surface-alt: var(--color-gray-50);
+  --color-surface-card: #ffffff;
+  --color-border: var(--color-gray-200);
+  --color-border-subtle: rgba(229, 231, 235, 0.5);
+  --color-text-primary: var(--color-gray-900);
+  --color-text-secondary: var(--color-gray-600);
+  --color-text-muted: var(--color-gray-400);
+  --color-success: var(--color-emerald-600);
+  --color-error: var(--color-red-600);
+  --color-glow: rgba(99, 102, 241, 0.2);
+}
+
+.dark {
+  --color-primary: var(--color-indigo-400);
+  --color-primary-hover: var(--color-indigo-300);
+  --color-primary-soft: var(--color-indigo-950);
+  --color-primary-dark: var(--color-indigo-400);
+  --color-primary-hover-dark: var(--color-indigo-300);
+  --color-primary-soft-dark: var(--color-indigo-950);
+  --color-surface: var(--color-slate-900);
+  --color-surface-alt: var(--color-slate-800);
+  --color-surface-card: rgba(51, 65, 85, 0.8);
+  --color-border: var(--color-slate-700);
+  --color-border-subtle: rgba(51, 65, 85, 0.5);
+  --color-text-primary: var(--color-gray-50);
+  --color-text-secondary: var(--color-gray-400);
+  --color-text-muted: var(--color-gray-500);
+  --color-success: var(--color-emerald-400);
+  --color-error: var(--color-red-400);
+  --color-glow: rgba(129, 140, 248, 0.15);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+::selection {
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

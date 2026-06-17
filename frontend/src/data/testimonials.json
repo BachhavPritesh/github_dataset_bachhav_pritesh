@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Alex Chen",
+    "role": "ML Engineer",
+    "company": "TechCorp",
+    "avatar": "AC",
+    "content": "RepoHub saved me hours of dataset curation. The search and filtering capabilities are exactly what I needed for training my code models."
+  },
+  {
+    "name": "Sarah Johnson",
+    "role": "Open Source Maintainer",
+    "company": "OS Foundation",
+    "avatar": "SJ",
+    "content": "The analytics dashboard gives me incredible visibility into how my repositories are being used. A must-have tool for any open source project."
+  },
+  {
+    "name": "Marcus Williams",
+    "role": "Data Scientist",
+    "company": "AI Labs",
+    "avatar": "MW",
+    "content": "I use RepoHub daily to find training data for fine-tuning LLMs. The dataset quality and organization is outstanding."
+  }
+]
