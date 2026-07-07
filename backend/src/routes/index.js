@@ -12,6 +12,7 @@ const authRouter = require('./auth.routes');
 const jwtRouter = require('./jwt.routes');
 const adminRouter = require('./admin.routes');
 const protectedRouter = require('./protected.routes');
+const blogRouter = require('./blog.routes');
 
 const router = express.Router();
 
@@ -28,5 +29,6 @@ router.use('/auth', authRouter);
 router.use('/jwt', jwtRouter);
 router.use('/admin', adminRouter);
 router.use('/protected', protectedRouter);
+router.use('/blogs', blogRouter);
 
 module.exports = router;

@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "seed": "node src/seeders/dataset.seeder.js"
+    "seed": "node src/seeders/dataset.seeder.js",
+    "seed:admin": "node src/seeders/admin.seeder.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

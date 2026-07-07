@@ -7,7 +7,7 @@ const { generateToken } = require('../utils/jwtHelper');
 // creates a new user and returns the user object with a JWT token
 const register = async (name, email, password) => {
   const user = await User.create({ name, email, password });
-  const token = generateToken({ id: user._id, role: user.role });
+  const token = generateToken({ id: user._id, role: user.role, name: user.name });
   return { user: { id: user._id, name: user.name, email: user.email, role: user.role }, token };
 };
 
@@ -18,7 +18,7 @@ const login = async (email, password) => {
   if (!user || !(await user.comparePassword(password))) {
     return null; // user not found or password doesn't match
   }
-  const token = generateToken({ id: user._id, role: user.role });
+  const token = generateToken({ id: user._id, role: user.role, name: user.name });
   return { user: { id: user._id, name: user.name, email: user.email, role: user.role }, token };
 };
 
