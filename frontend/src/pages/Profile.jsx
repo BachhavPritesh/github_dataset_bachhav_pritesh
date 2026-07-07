@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { User, Mail, Shield, Calendar, Edit3, Save, X, Lock } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
-import AnimatedSection from '../components/ui/AnimatedSection'
+import { useToast } from '../context/ToastContext'
+import PageWrapper from '../components/ui/PageWrapper'
 import Input from '../components/ui/Input'
 import Button from '../components/ui/Button'
 import { formatDate } from '../lib/utils'
@@ -15,6 +16,7 @@ export default function Profile() {
   const [email, setEmail] = useState(user?.email || '')
   const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
+  const { toast } = useToast()
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
 
@@ -24,8 +26,11 @@ export default function Profile() {
     try {
       await updateProfile({ name, email })
       setEditing(false)
+      toast({ message: 'Profile updated successfully', type: 'success' })
     } catch (err) {
-      setError(err.response?.data?.message || 'Update failed')
+      const msg = err.response?.data?.message || 'Update failed'
+      setError(msg)
+      toast({ message: msg, type: 'error' })
     } finally {
       setSaving(false)
     }
@@ -48,8 +53,8 @@ export default function Profile() {
   }
 
   return (
-    <AnimatedSection>
-      <div className="max-w-2xl mx-auto px-4 sm:px-6">
+    <PageWrapper>
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-16">
         <h1 className="text-3xl font-bold text-text-primary mb-8">Profile</h1>
 
         <div className="rounded-2xl border border-border bg-surface-card shadow-sm p-6 sm:p-8 mb-6">
@@ -181,6 +186,6 @@ export default function Profile() {
           )}
         </div>
       </div>
-    </AnimatedSection>
+    </PageWrapper>
   )
 }

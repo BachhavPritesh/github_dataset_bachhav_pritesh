@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Code2 } from 'lucide-react'
+import { Menu, Code2 } from 'lucide-react'
 import ThemeToggle from '../ui/ThemeToggle'
 import Button from '../ui/Button'
 import { useAuth } from '../../context/AuthContext'
@@ -28,6 +28,7 @@ export default function Navbar() {
   }, [])
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMobileOpen(false)
   }, [location])
 
@@ -39,57 +40,81 @@ export default function Navbar() {
         transition={{ duration: 0.3, ease: 'easeOut' }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border-b border-border-subtle py-2'
+            ? 'glass-card border-b-0 py-2 shadow-lg shadow-primary/5'
             : 'bg-transparent py-4'
         }`}
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 text-text-primary font-bold text-xl">
-            <Code2 className="h-6 w-6 text-primary" />
-            <span>RepoHub</span>
+          <Link to="/" className="flex items-center gap-2.5 font-bold text-xl tracking-tight">
+            <div className="h-9 w-9 rounded-lg bg-gradient-to-tr from-indigo-500 to-violet-500 flex items-center justify-center shadow-md shadow-indigo-500/25">
+              <Code2 className="h-4.5 w-4.5 text-white" />
+            </div>
+            <span className="bg-gradient-to-r from-text-primary via-text-primary to-text-secondary bg-clip-text text-transparent font-extrabold">
+              RepoHub
+            </span>
           </Link>
 
-          <div className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  location.pathname === link.to
-                    ? 'text-primary bg-primary-soft'
-                    : 'text-text-secondary hover:text-text-primary hover:bg-surface-alt'
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+          <div className="hidden lg:flex items-center gap-1.5">
+            {navLinks.map((link) => {
+              const isActive = location.pathname === link.to
+              return (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className={`relative px-4 py-1.5 text-sm font-medium transition-all duration-200 ${
+                    isActive
+                      ? 'text-primary'
+                      : 'text-text-secondary hover:text-text-primary'
+                  }`}
+                >
+                  {link.label}
+                  {isActive && (
+                    <motion.div
+                      layoutId="nav-underline"
+                      className="absolute -bottom-0.5 left-2 right-2 h-0.5 bg-primary rounded-full"
+                      transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                    />
+                  )}
+                </Link>
+              )
+            })}
           </div>
 
           <div className="hidden lg:flex items-center gap-3">
-            <ThemeToggle />
+            <div className="rounded-xl bg-surface-alt/60 border border-border/60 p-1 flex items-center justify-center">
+              <ThemeToggle />
+            </div>
             {user ? (
               <div className="flex items-center gap-3">
+                {user.role === 'admin' && (
+                  <Link
+                    to="/admin"
+                    className="text-sm font-medium text-indigo-500 hover:text-indigo-400 transition-colors"
+                  >
+                    Admin Panel
+                  </Link>
+                )}
                 <Link
                   to="/profile"
-                  className="text-sm text-text-secondary hover:text-text-primary transition-colors"
+                  className="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors"
                 >
                   {user.name}
                 </Link>
-                <Button variant="ghost" size="sm" onClick={logout}>
+                <Button variant="ghost" size="sm" onClick={logout} className="rounded-full">
                   Logout
                 </Button>
               </div>
             ) : (
-              <>
+              <div className="flex items-center gap-2">
                 <Link to="/login">
-                  <Button variant="ghost" size="sm">
+                  <Button variant="ghost" size="sm" className="rounded-full">
                     Log in
                   </Button>
                 </Link>
                 <Link to="/register">
-                  <Button size="sm">Sign up</Button>
+                  <Button size="sm" className="rounded-full px-4">Sign up</Button>
                 </Link>
-              </>
+              </div>
             )}
           </div>
 

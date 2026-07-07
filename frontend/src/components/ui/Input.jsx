@@ -21,6 +21,7 @@ export default function Input({
         <motion.label
           animate={{
             y: focused || hasValue ? -20 : 0,
+            x: (focused || hasValue) && Icon ? -28 : 0,
             scale: focused || hasValue ? 0.85 : 1,
             color: error
               ? 'var(--color-error)'
@@ -30,7 +31,8 @@ export default function Input({
           }}
           transition={{ duration: 0.2 }}
           className={cn(
-            'absolute left-3 top-3.5 origin-left cursor-text pointer-events-none z-10',
+            'absolute top-3.5 origin-left cursor-text pointer-events-none z-10',
+            Icon ? 'left-10' : 'left-3',
             'text-text-muted text-sm',
           )}
         >

@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Code2, BookOpen, Terminal, FileCode, GitFork, Sparkles, Braces, Clock } from 'lucide-react'
+import { ArrowRight, Code2, BookOpen, Terminal, FileCode, GitFork, Braces } from 'lucide-react'
 import { stagger, fadeUp } from '../../lib/animations'
 import Button from '../ui/Button'
 import { useRandomDataset } from '../../hooks/useRandomDataset'
@@ -40,13 +40,13 @@ export default function Hero() {
   const { data: dataset } = useRandomDataset()
 
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden pt-16">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary-soft/50 via-surface to-transparent dark:from-primary-soft-dark/20" />
-      <div className="absolute top-20 right-20 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-20 left-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+    <section className="relative min-h-[90vh] flex items-center overflow-hidden pt-20 bg-dots">
+      {/* Decorative Orbs */}
+      <div className="absolute top-[10%] right-[15%] w-[400px] h-[400px] bg-indigo-500/10 dark:bg-indigo-500/5 rounded-full blur-[130px] pointer-events-none animate-pulse" />
+      <div className="absolute bottom-[10%] left-[5%] w-[500px] h-[500px] bg-violet-500/10 dark:bg-violet-500/5 rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 z-10">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
             variants={stagger}
             initial="hidden"
@@ -54,25 +54,27 @@ export default function Hero() {
             className="space-y-8"
           >
             <motion.div variants={fadeUp} className="space-y-4">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-text-primary leading-tight tracking-tight">
-                Explore GitHub{' '}
-                <span className="text-primary">Intelligence</span>
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black text-text-primary leading-tight tracking-tight">
+                Explore GitHub <br />
+                <span className="bg-gradient-to-r from-indigo-500 via-indigo-600 to-violet-500 bg-clip-text text-transparent">
+                  Intelligence
+                </span>
               </h1>
-              <p className="text-lg sm:text-xl text-text-secondary max-w-xl leading-relaxed">
-                Browse, search, and analyze millions of code and documentation
-                snippets from the world's most popular open-source repositories.
+              <p className="text-lg text-text-secondary max-w-xl leading-relaxed">
+                Browse, query, and analyze millions of code snippets and structured documentation
+                records parsed from the world's most popular open-source repositories.
               </p>
             </motion.div>
 
             <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
               <Link to="/datasets">
-                <Button size="lg">
+                <Button size="lg" className="rounded-full shadow-lg shadow-indigo-500/20 group">
                   Explore Datasets
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
               <Link to="/about">
-                <Button variant="secondary" size="lg">
+                <Button variant="secondary" size="lg" className="rounded-full">
                   Learn More
                 </Button>
               </Link>

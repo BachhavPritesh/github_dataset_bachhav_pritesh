@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Mail, Lock } from 'lucide-react'
+import { Mail, Lock, ArrowRight } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
+import { useToast } from '../../context/ToastContext'
 import Input from '../ui/Input'
 import Button from '../ui/Button'
 
 export default function LoginForm() {
   const { login } = useAuth()
+  const { toast } = useToast()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -18,21 +20,29 @@ export default function LoginForm() {
     setLoading(true)
     try {
       await login(email, password)
+      toast({ message: 'Welcome back!', type: 'success' })
     } catch (err) {
-      setError(err.response?.data?.message || 'Invalid credentials')
+      const msg = err.response?.data?.message || 'Invalid email or password'
+      setError(msg)
+      toast({ message: msg, type: 'error' })
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold text-text-primary mb-2">Welcome back</h2>
-      <p className="text-text-secondary mb-8">Sign in to your RepoHub account</p>
-
-      <form onSubmit={handleSubmit} className="space-y-5">
+    <div className="flex flex-col">
+      <div className="mb-6">
+        <h2 className="text-3xl font-black tracking-tight text-text-primary dark:text-white">
+          Welcome back
+        </h2>
+        <p className="text-text-secondary dark:text-slate-400 text-sm mt-1.5">
+          Sign in to access repository analytics and dataset tools.
+        </p>
+      </div>
+      <form onSubmit={handleSubmit} className="space-y-4 mt-2">
         <Input
-          label="Email"
+          label="Email address"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -48,26 +58,32 @@ export default function LoginForm() {
           required
         />
 
+        <div className="flex justify-end pt-1">
+          <Link
+            to="/forgot-password"
+            className="text-xs text-text-secondary dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors font-medium"
+          >
+            Forgot your password?
+          </Link>
+        </div>
+
         {error && (
-          <p className="text-error text-sm text-center">{error}</p>
+          <div className="bg-error/10 border border-error/20 rounded-xl p-3">
+            <p className="text-error text-xs text-center font-medium">{error}</p>
+          </div>
         )}
 
-        <Button type="submit" loading={loading} className="w-full">
-          Sign in
+        <Button type="submit" loading={loading} className="w-full py-3 mt-2 flex items-center justify-center gap-1.5 group">
+          <span>Sign in</span>
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </Button>
       </form>
 
-      <div className="mt-6 text-center space-y-2">
-        <Link
-          to="/forgot-password"
-          className="text-sm text-text-secondary hover:text-primary transition-colors"
-        >
-          Forgot your password?
-        </Link>
-        <p className="text-sm text-text-muted">
+      <div className="mt-8 text-center border-t border-border/60 dark:border-slate-700/60 pt-6">
+        <p className="text-sm text-text-secondary dark:text-slate-400">
           Don't have an account?{' '}
-          <Link to="/register" className="text-primary hover:text-primary-hover font-medium transition-colors">
-            Sign up
+          <Link to="/register" className="text-primary hover:text-primary-hover font-semibold transition-colors">
+            Create an account
           </Link>
         </p>
       </div>

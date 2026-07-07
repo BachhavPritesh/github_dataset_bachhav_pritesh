@@ -4,7 +4,8 @@ import { ArrowLeft, GitFork, FileCode, Calendar } from 'lucide-react'
 import { useDataset } from '../hooks/useDataset'
 import Badge from '../components/ui/Badge'
 import Skeleton from '../components/ui/Skeleton'
-import ErrorState from '../components/ui/ErrorState'
+import EmptyState from '../components/ui/EmptyState'
+import PageWrapper from '../components/ui/PageWrapper'
 import { fadeIn } from '../lib/animations'
 import { formatDate } from '../lib/utils'
 
@@ -24,7 +25,8 @@ export default function DatasetDetail() {
   if (isError) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-16">
-        <ErrorState
+        <EmptyState
+          variant="error"
           message={error?.response?.data?.message || 'Failed to load dataset'}
           onRetry={refetch}
         />
@@ -46,6 +48,7 @@ export default function DatasetDetail() {
   }
 
   return (
+    <PageWrapper>
     <motion.div
       variants={fadeIn}
       initial="hidden"
@@ -123,5 +126,6 @@ export default function DatasetDetail() {
         </div>
       </div>
     </motion.div>
+    </PageWrapper>
   )
 }

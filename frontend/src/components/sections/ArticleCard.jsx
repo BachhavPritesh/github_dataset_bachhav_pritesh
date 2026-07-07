@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Calendar, User } from 'lucide-react'
 import { cardHover } from '../../lib/animations'
@@ -6,13 +7,15 @@ import Badge from '../ui/Badge'
 
 export default function ArticleCard({ article, index = 0 }) {
   return (
+    <Link to={`/blog/${article._id}`}>
     <motion.article
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
-      whileHover={cardHover}
-      className="rounded-xl border border-border-subtle bg-surface-card shadow-sm hover:shadow-md transition-shadow p-6 cursor-pointer"
+      whileHover={{ y: -3, boxShadow: '0 12px 40px rgba(99,102,241,0.1)' }}
+      transition={{ duration: 0.2, ease: 'easeOut' }}
+      className="rounded-xl border border-border-subtle bg-surface-card shadow-sm p-6 cursor-pointer"
     >
       <div className="flex flex-wrap gap-2 mb-3">
         {article.tags.map((tag) => (
@@ -32,9 +35,10 @@ export default function ArticleCard({ article, index = 0 }) {
         </span>
         <span className="flex items-center gap-1">
           <Calendar className="h-3 w-3" />
-          {formatDate(article.date)}
+          {formatDate(article.createdAt || article.date)}
         </span>
       </div>
     </motion.article>
+    </Link>
   )
 }

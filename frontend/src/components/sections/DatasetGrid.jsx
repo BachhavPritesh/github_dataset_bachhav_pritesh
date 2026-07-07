@@ -5,7 +5,7 @@ import { useDatasets } from '../../hooks/useDatasets'
 import DatasetCard from './DatasetCard'
 import FilterBar from './FilterBar'
 import Skeleton from '../ui/Skeleton'
-import ErrorState from '../ui/ErrorState'
+import EmptyState from '../ui/EmptyState'
 
 export default function DatasetGrid() {
   const [page, setPage] = useState(1)
@@ -37,6 +37,7 @@ export default function DatasetGrid() {
 
   const datasets = data?.data || []
   const pagination = data?.pagination || {}
+  const hasActiveFilters = Object.values(filters).some((v) => v.length > 0) || !!search
 
   return (
     <section className="py-16">
@@ -60,14 +61,13 @@ export default function DatasetGrid() {
               ))}
             </div>
           ) : isError ? (
-            <ErrorState
+            <EmptyState
+              variant="error"
               message={error?.response?.data?.message || 'Failed to load datasets'}
               onRetry={refetch}
             />
           ) : datasets.length === 0 ? (
-            <div className="text-center py-16">
-              <p className="text-text-muted text-lg">No datasets found matching your criteria.</p>
-            </div>
+            hasActiveFilters ? <EmptyState variant="no-results" /> : <EmptyState variant="empty" />
           ) : (
             <>
               <AnimatePresence mode="wait">

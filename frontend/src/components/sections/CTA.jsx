@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Sparkles } from 'lucide-react'
-import Button from '../ui/Button'
 
 export default function CTA() {
   return (
@@ -26,18 +25,14 @@ export default function CTA() {
             the world's best open-source repositories.
           </p>
           <Link to="/datasets">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <motion.button
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-white text-indigo-700 font-bold text-base shadow-2xl shadow-indigo-900/30 hover:shadow-indigo-900/40 hover:bg-white/95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 group"
             >
-              <Button
-                size="lg"
-                className="bg-white text-indigo-700 hover:bg-white/90 shadow-lg shadow-indigo-900/20"
-              >
-                Start Exploring
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </motion.div>
+              Start Exploring
+              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+            </motion.button>
           </Link>
         </motion.div>
       </div>

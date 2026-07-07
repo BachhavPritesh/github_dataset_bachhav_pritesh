@@ -20,6 +20,9 @@
   --color-success: var(--color-emerald-600);
   --color-error: var(--color-red-600);
   --color-glow: rgba(99, 102, 241, 0.2);
+  --color-glass-bg: rgba(255, 255, 255, 0.6);
+  --color-glass-border: rgba(255, 255, 255, 0.18);
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.06);
 }
 
 .dark {
@@ -29,17 +32,20 @@
   --color-primary-dark: var(--color-indigo-400);
   --color-primary-hover-dark: var(--color-indigo-300);
   --color-primary-soft-dark: var(--color-indigo-950);
-  --color-surface: var(--color-slate-900);
-  --color-surface-alt: var(--color-slate-800);
-  --color-surface-card: rgba(51, 65, 85, 0.8);
-  --color-border: var(--color-slate-700);
-  --color-border-subtle: rgba(51, 65, 85, 0.5);
-  --color-text-primary: var(--color-gray-50);
-  --color-text-secondary: var(--color-gray-400);
-  --color-text-muted: var(--color-gray-500);
+  --color-surface: #0a0d16;
+  --color-surface-alt: #0f1322;
+  --color-surface-card: rgba(15, 19, 34, 0.7);
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-subtle: rgba(255, 255, 255, 0.04);
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #64748b;
   --color-success: var(--color-emerald-400);
   --color-error: var(--color-red-400);
-  --color-glow: rgba(129, 140, 248, 0.15);
+  --color-glow: rgba(99, 102, 241, 0.12);
+  --color-glass-bg: rgba(15, 19, 34, 0.6);
+  --color-glass-border: rgba(255, 255, 255, 0.06);
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 html {
@@ -57,6 +63,64 @@ body {
 ::selection {
   background-color: var(--color-primary-soft);
   color: var(--color-primary);
+}
+
+/* Custom modern scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border: 2px solid var(--color-surface);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* Glass card utility */
+.glass-card {
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  background-color: var(--color-glass-bg);
+  border: 1px solid var(--color-glass-border);
+  box-shadow: var(--shadow-glass);
+}
+
+/* Shimmer animation for skeletons */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface-alt) 25%,
+    var(--color-surface-card) 50%,
+    var(--color-surface-alt) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* Custom Designer Utilities */
+.bg-dots {
+  background-image: radial-gradient(var(--color-border) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+}
+
+.glow-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(120px);
+  pointer-events: none;
+  opacity: 0.55;
+  transition: opacity 0.3s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {

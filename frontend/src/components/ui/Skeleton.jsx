@@ -1,18 +1,20 @@
 import { cn } from '../../lib/utils'
 
-export default function Skeleton({ variant = 'text', width, height, className }) {
-  const base = 'animate-pulse bg-gray-200 dark:bg-slate-700 rounded-lg'
+const variants = {
+  text: 'h-4 w-full rounded-md',
+  card: 'h-48 w-full rounded-2xl',
+  circle: 'h-10 w-10 rounded-full',
+  'table-row': 'h-12 w-full rounded-lg',
+}
 
-  const variants = {
-    text: 'h-4 w-full',
-    card: 'h-48 w-full',
-    circle: 'h-12 w-12 rounded-full',
-  }
-
+export default function Skeleton({ variant = 'text', className }) {
   return (
     <div
-      className={cn(base, variants[variant], className)}
-      style={{ width, height }}
+      className={cn(
+        'shimmer',
+        variants[variant] || variants.text,
+        className,
+      )}
     />
   )
 }

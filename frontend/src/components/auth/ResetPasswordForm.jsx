@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Mail, Lock, KeyRound, CheckCircle2 } from 'lucide-react'
+import { Mail, Lock, KeyRound, CheckCircle2, ArrowRight, ArrowLeft } from 'lucide-react'
 import Input from '../ui/Input'
 import Button from '../ui/Button'
 import api from '../../lib/api'
@@ -25,7 +25,7 @@ export default function ResetPasswordForm() {
       setSuccess(true)
       setTimeout(() => navigate('/login'), 2000)
     } catch (err) {
-      setError(err.response?.data?.message || 'Reset failed')
+      setError(err.response?.data?.message || 'Password reset failed')
     } finally {
       setLoading(false)
     }
@@ -39,22 +39,29 @@ export default function ResetPasswordForm() {
           animate={{ scale: 1 }}
           transition={{ type: 'spring', stiffness: 200 }}
         >
-          <CheckCircle2 className="h-12 w-12 text-success mx-auto mb-4" />
+          <CheckCircle2 className="h-16 w-16 text-success mx-auto mb-5" />
         </motion.div>
-        <h2 className="text-xl font-bold text-text-primary mb-2">Password reset!</h2>
-        <p className="text-text-secondary text-sm">Redirecting to login...</p>
+        <h2 className="text-2xl font-bold text-text-primary dark:text-white mb-2">Password reset successful!</h2>
+        <p className="text-text-secondary dark:text-slate-400 text-sm">Your password has been successfully updated.</p>
+        <p className="text-xs text-text-muted mt-4">Redirecting you to login page...</p>
       </div>
     )
   }
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold text-text-primary mb-2">Set new password</h2>
-      <p className="text-text-secondary mb-8">Enter the reset code from your email and choose a new password.</p>
+    <div className="flex flex-col">
+      <div className="mb-6">
+        <h2 className="text-3xl font-black tracking-tight text-text-primary dark:text-white">
+          Enter reset details
+        </h2>
+        <p className="text-text-secondary dark:text-slate-400 text-sm mt-1.5">
+          Enter the verification code sent to your email and select your new password.
+        </p>
+      </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <Input
-          label="Email"
+          label="Email address"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -62,11 +69,11 @@ export default function ResetPasswordForm() {
           required
         />
         <Input
-          label="Reset code"
+          label="Reset code (OTP)"
           value={otp}
           onChange={(e) => setOtp(e.target.value)}
           icon={KeyRound}
-          placeholder="Enter the code from your email"
+          placeholder="Enter 6-digit OTP code"
           required
         />
         <Input
@@ -79,13 +86,26 @@ export default function ResetPasswordForm() {
         />
 
         {error && (
-          <p className="text-error text-sm text-center">{error}</p>
+          <div className="bg-error/10 border border-error/20 rounded-xl p-3">
+            <p className="text-error text-xs text-center font-medium">{error}</p>
+          </div>
         )}
 
-        <Button type="submit" loading={loading} className="w-full">
-          Reset password
+        <Button type="submit" loading={loading} className="w-full py-3 mt-2 flex items-center justify-center gap-1.5 group">
+          <span>Update password</span>
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </Button>
       </form>
+
+      <div className="mt-8 text-center border-t border-border/60 dark:border-slate-700/60 pt-6">
+        <Link 
+          to="/login" 
+          className="inline-flex items-center gap-2 text-sm text-text-secondary dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors font-medium"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          <span>Back to sign in</span>
+        </Link>
+      </div>
     </div>
   )
 }
